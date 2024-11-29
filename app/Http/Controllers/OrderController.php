@@ -48,10 +48,11 @@ class OrderController extends Controller
 
         $client = Client::where('phone', $validated['phone'])->first();
         if (!$client) {
-            $client = Client::сreate([
+            $client = Client::create([
                 'name' => $validated['name'],
                 'phone' => $validated['phone'],
                 'other_phone' => $validated['other_phone'] ?? null,
+                'comment' => $validated['comment'] ?? null,
                 'messenger' => $validated['messenger'] ?? null,
                 'other_messenger' => $validated['other_messenger'] ?? null,
             ]);
@@ -76,7 +77,8 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $order = Order::with('client', 'orderDetails')->findOrFail($id);
+        return view('orders.show', compact('order'));
     }
 
     /**

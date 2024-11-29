@@ -11,7 +11,6 @@ class Order extends Model
     protected $fillable = [
     'total_count',
     'price',
-    'total_price',
     'prepayment',
     'date',
     'total_count_box',
