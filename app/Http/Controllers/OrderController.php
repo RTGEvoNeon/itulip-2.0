@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\Sort;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -13,7 +15,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::with('client')->get();
         return view('orders.index', compact('orders'));
     }
 
@@ -78,7 +80,9 @@ class OrderController extends Controller
     public function show(string $id)
     {
         $order = Order::with('client', 'orderDetails')->findOrFail($id);
-        return view('orders.show', compact('order'));
+        $details = OrderDetail::with('sort')->where('order_id', $id)->get();
+
+        return view('orders.show', compact('order', 'details'));
     }
 
     /**
@@ -94,7 +98,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        
     }
 
     /**
@@ -104,4 +108,25 @@ class OrderController extends Controller
     {
         //
     }
+
+
+    public function updateQuantities(Request $request, string $orderId)
+{
+    // Валидация входящих данных
+    $request->validate([
+        'quantities' => 'array',
+        'quantities.*' => 'required|integer|min:1', // количество должно быть целым числом и больше нуля
+    ]);
+
+    // Обновление количества для каждого элемента в деталях заказа
+    foreach ($request->quantities as $orderDetailId => $quantity) {
+        $orderDetail = OrderDetail::findOrFail($orderDetailId);
+        $orderDetail->quantity = $quantity;
+        $orderDetail->save();
+    }
+
+    // Перенаправляем обратно с сообщением об успешном обновлении
+    return redirect()->route('orders.show', $orderId)->with('success', 'Детали заказа успешно обновлены!');
+}
+
 }

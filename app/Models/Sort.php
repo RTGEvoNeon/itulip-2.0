@@ -20,4 +20,8 @@ class Sort extends Model
         'collected',
         'ordered',
     ];
+
+    public function orderDetails() {
+        return $this->hasMany(OrderDetail::class);
+    }
 }

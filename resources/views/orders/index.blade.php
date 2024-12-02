@@ -15,7 +15,7 @@
             @foreach ($orders as $order) <!-- Перебираем массив заказов -->
             <tr>
                 <td><a href="orders/{{ $order->id }}">{{ $order->id }}</a></td> <!-- ID заказа -->
-                <td>{{ $order->client_id}}
+                <td>{{ $order->client->name }}
                 <td>{{ $order->total_count }}</td> <!-- Общее количество -->
             </tr>
             @endforeach
