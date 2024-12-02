@@ -129,4 +129,5 @@ class OrderController extends Controller
     return redirect()->route('orders.show', $orderId)->with('success', 'Детали заказа успешно обновлены!');
 }
 
+
 }

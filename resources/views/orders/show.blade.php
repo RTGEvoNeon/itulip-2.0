@@ -45,6 +45,7 @@
                     <tr>
                         <td>{{ $detail->sort->title }}</td>
                         <td>
+                            <!-- Используем значение из базы данных для инициализации поля -->
                             <input type="number" name="quantities[{{ $detail->id }}]" value="{{ $detail->quantity }}" min="1" class="form-control" />
                         </td>
                     </tr>
