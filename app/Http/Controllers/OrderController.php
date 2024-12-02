@@ -110,18 +110,18 @@ class OrderController extends Controller
     }
 
 
-    public function updateQuantities(Request $request, string $orderId)
+    public function updateCount(Request $request, string $orderId)
 {
     // Валидация входящих данных
     $request->validate([
-        'quantities' => 'array',
-        'quantities.*' => 'required|integer|min:1', // количество должно быть целым числом и больше нуля
+        'count' => 'array',
+        'count.*' => 'required|integer|min:1', // количество должно быть целым числом и больше нуля
     ]);
 
     // Обновление количества для каждого элемента в деталях заказа
-    foreach ($request->quantities as $orderDetailId => $quantity) {
+    foreach ($request->count as $orderDetailId => $count) {
         $orderDetail = OrderDetail::findOrFail($orderDetailId);
-        $orderDetail->quantity = $quantity;
+        $orderDetail->count = $count;
         $orderDetail->save();
     }
 

@@ -30,7 +30,7 @@
 
     <div class="order-details">
         <h3>Детали заказа</h3>
-        <form action="{{ route('orders.updateQuantities', $order->id) }}" method="POST">
+        <form action="{{ route('orders.updateCount', $order->id) }}" method="POST">
             @csrf
             @method('PUT')
             <table class="table">
@@ -46,7 +46,7 @@
                         <td>{{ $detail->sort->title }}</td>
                         <td>
                             <!-- Используем значение из базы данных для инициализации поля -->
-                            <input type="number" name="quantities[{{ $detail->id }}]" value="{{ $detail->quantity }}" min="1" class="form-control" />
+                            <input type="number" name="count[{{ $detail->id }}]" value="{{ $detail->count }}" min="1" class="form-control" />
                         </td>
                     </tr>
                     @endforeach

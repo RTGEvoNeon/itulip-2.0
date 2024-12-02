@@ -15,7 +15,7 @@ Route::resource('/sorts', SortController::class);
 Route::resource('/orders', OrderController::class);
 Route::resource('/clients', ClientController::class);
 
-Route::put('/orders/{order}/update-quantities', [OrderController::class, 'updateQuantities'])->name('orders.updateQuantities');
+Route::put('/orders/{order}/update-count', [OrderController::class, 'updateCount'])->name('orders.updateCount');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
