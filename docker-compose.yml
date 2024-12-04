@@ -1,5 +1,5 @@
 services:
-    laravel.test:
+    app:
         build:
             context: './vendor/laravel/sail/runtimes/8.3'
             dockerfile: Dockerfile
@@ -23,6 +23,17 @@ services:
             - sail
         depends_on:
             - mysql
+    nginx:
+        image: nginx:alpine
+        ports:
+          - "80:80"
+        volumes:
+          - .:/var/www/html
+          - ./nginx/default.conf:/etc/nginx/conf.d/default.conf 
+        depends_on:
+          - app
+        networks:
+          - sail
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
