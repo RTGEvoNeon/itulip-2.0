@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="card">
-    <div style="display: flex">
-        <div class="px-3">
-            <div class="">
-                <ul>
+<div class="card p-4">
+    <div class="d-flex flex-wrap">
+        <!-- Секция с общей информацией -->
+        <div class="order-info px-3 mb-4">
+            <div class="order-summary mb-3">
+                <ul class="list-unstyled">
                     <li><strong>Общее количество:</strong> {{ $order->total_count }}</li>
                     <li><strong>Цена:</strong> {{ number_format($order->price, 2) }} руб.</li>
                     <li><strong>Предоплата:</strong> {{ number_format($order->prepayment, 2) }} руб.</li>
@@ -14,9 +15,9 @@
                     <li><strong>Цена за коробку:</strong> {{ number_format($order->box_price, 2) }} руб.</li>
                 </ul>
             </div>
-    
-            <div class="">
-                <ul>
+
+            <div class="client-info">
+                <ul class="list-unstyled">
                     <li><strong>ФИО:</strong> {{ $order->client->name }}</li>
                     <li><strong>Телефон:</strong> {{ $order->client->phone }}</li>
                     <li><strong>Мессенджер:</strong> {{ $order->client->messenger }}</li>
@@ -24,73 +25,37 @@
                 </ul>
             </div>
         </div>
-    
-        <div class="table-responsive">
+
+        <!-- Секция с таблицей -->
+        <div class="table-container table-responsive">
             <form action="{{ route('orders.updateCount', $order->id) }}" method="POST">
                 @csrf
                 @method('PUT')
-                <div class="table align-items-center">
-                    <table class="">
-                        <thead>
-                            <tr>
-                                <th>Название сорта</th>
-                                <th>Количество</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($details as $detail)
-                            <tr>
-                                <td>{{ $detail->sort->title }}</td>
-                                <td>
-                                    <input type="number" name="count[{{ $detail->id }}]" value="{{ $detail->count }}" min="1" class="form-control" />
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
-                </div>
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Название сорта</th>
+                            <th>Количество</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($details as $detail)
+                        <tr>
+                            <td>{{ $detail->sort->title }}</td>
+                            <td>
+                                <input type="number" name="count[{{ $detail->id }}]" 
+                                       value="{{ $detail->count }}" 
+                                       min="1" 
+                                       class="form-control" />
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-primary mt-3">Сохранить изменения</button>
             </form>
         </div>
     </div>
 </div>
 @endsection
-
-<style>
-    .order-info {
-        display: flex-col;
-        justify-content: space-between;
-        margin-bottom: 30px;
-    }
-
-    .order-summary,
-    .client-info {
-        width: 48%;
-    }
-
-    .order-details {
-        display: flex-col;
-        justify-content: space-between;
-        margin-top: 30px;
-    }
-
-    .table-container {
-        width: 48%; /* Размер таблицы */
-        margin-left: 30px;
-    }
-
-    /* Стиль для таблицы */
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    table th, table td {
-        padding: 10px;
-        border: 1px solid #ddd;
-    }
-
-    table th {
-        background-color: #f4f4f4;
-    }
-</style>
+    

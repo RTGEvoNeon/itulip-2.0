@@ -66,8 +66,8 @@ class OrderController extends Controller
             'prepayment'=> $validated['prepayment'],
             'date'=> $validated['date'],
             'comment' => $validated['comment'] ?? null,
-            'total_count_box'=> $validated['total_count_box'],
-            'box_price'=> $validated['box_price'],
+            'total_count_box'=> $validated['total_count_box'] ?? 0,
+            'box_price'=> $validated['box_price'] ?? 0,
             'client_id'=> $client->id,
         ]);
 
