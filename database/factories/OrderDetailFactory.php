@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Order;
 use App\Models\Sort;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,10 +20,11 @@ class OrderDetailFactory extends Factory
     {
 
         $sorts = Sort::pluck('id')->toArray();
+        $orders = Order::pluck('id')->toArray();
         return [
-            'order_id' => 3,
+            'order_id' => $this->faker->randomElement($orders),
             'sort_id' => $this->faker->randomElement($sorts),
-            'count' => 10000,
+            'count' => $this->faker->numberBetween(1000, 50000),
         ];
     }
 }

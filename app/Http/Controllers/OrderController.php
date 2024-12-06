@@ -80,9 +80,10 @@ class OrderController extends Controller
     public function show(string $id)
     {
         $order = Order::with('client', 'orderDetails')->findOrFail($id);
-        $details = OrderDetail::with('sort')->where('order_id', $id)->get();
+        $details = OrderDetail::where('order_id', $id)->get();
+        $sorts = Sort::all();
 
-        return view('orders.show', compact('order', 'details'));
+        return view('orders.show', compact('order', 'details', 'sorts'));
     }
 
     /**

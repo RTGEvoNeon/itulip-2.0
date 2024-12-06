@@ -14,6 +14,5 @@ class OrderDetailSeeder extends Seeder
     public function run(): void
     {
         OrderDetail::factory()->count(30)->create();
-        $this->command->info('30 деталей заказа успешно добавлены.');
     }
 }

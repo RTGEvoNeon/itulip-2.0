@@ -35,7 +35,6 @@ services:
       MYSQL_USER: '${DB_USERNAME}'
       MYSQL_PASSWORD: '${DB_PASSWORD}'
     volumes:
-    ports:
       - 'mysql_data:/var/lib/mysql'
     networks:
       - my_network

@@ -39,14 +39,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($details as $detail)
+                        @foreach ($sorts as $sort)
+                        @php
+                            // Находим деталь, связанную с текущим сортом
+                            $detail = $details->firstWhere('sort_id', $sort->id);
+                        @endphp
                         <tr>
-                            <td>{{ $detail->sort->title }}</td>
+                            <td>{{ $sort->title }}</td>
                             <td>
-                                <input type="number" name="count[{{ $detail->id }}]" 
-                                       value="{{ $detail->count }}" 
-                                       min="1" 
-                                       class="form-control" />
+                                0
                             </td>
                         </tr>
                         @endforeach

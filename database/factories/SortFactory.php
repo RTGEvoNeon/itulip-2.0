@@ -17,7 +17,7 @@ class SortFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->word,
+            'title' => $this->faker->unique()->word,
             'planted' => $this->faker->numberBetween(50000, 100000),
             'collected' => $this->faker->numberBetween(1000, 50000),
             'ordered' => $this->faker->numberBetween(1000, 50000),
