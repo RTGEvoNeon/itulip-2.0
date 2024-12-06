@@ -111,13 +111,19 @@ class OrderController extends Controller
     }
 
 
-    public function updateCount(Request $request, string $orderId)
+    public function updateCount(Request $request, string $order_id)
 {
     // Валидация входящих данных
     $request->validate([
         'count' => 'array',
         'count.*' => 'required|integer|min:1', // количество должно быть целым числом и больше нуля
+        'sort' => 'array',
+        'sort.*' => 'required|integer|min:1',
     ]);
+
+    foreach ($request->sort as $sort_id => $count) {
+        $orderDetail = OrderDetailController::newDetail($sort_id, $order_id, $count);
+    } 
 
     // Обновление количества для каждого элемента в деталях заказа
     foreach ($request->count as $orderDetailId => $count) {
@@ -127,7 +133,7 @@ class OrderController extends Controller
     }
 
     // Перенаправляем обратно с сообщением об успешном обновлении
-    return redirect()->route('orders.show', $orderId)->with('success', 'Детали заказа успешно обновлены!');
+    return redirect()->route('orders.show', $order_id)->with('success', 'Детали заказа успешно обновлены!');
 }
 
 

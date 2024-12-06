@@ -8,6 +8,9 @@ services:
       - 'host.docker.internal:host-gateway'
     ports:
       - "9000:9000"
+    environment:
+      XDEBUG_MODE: debug
+      XDEBUG_CLIENT_HOST: host.docker.internal
     volumes:
       - .:/var/www/html
     depends_on:

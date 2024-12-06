@@ -47,7 +47,17 @@
                         <tr>
                             <td>{{ $sort->title }}</td>
                             <td>
-                                0
+                                @if ($detail)
+                                    <input type="number" name="count[{{ $detail->id }}]" 
+                                        value="{{ $detail->count }}" 
+                                        min="1" 
+                                        class="form-control" />
+                                @else 
+                                    <input type="number" name="sort[{{ $sort->id }}]" 
+                                    value="{{ 0 }}" 
+                                    min="1" 
+                                    class="form-control" />
+                                @endif
                             </td>
                         </tr>
                         @endforeach

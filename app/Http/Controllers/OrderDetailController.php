@@ -7,17 +7,13 @@ use Illuminate\Http\Request;
 
 class OrderDetailController extends Controller
 {
-    public function newDetail(Request $request) {
-        $validated = $request->validate([
-            'sort_id'=>'required|integer|min:1',
-            'order_id'=>'required|integer|min:1',
-            'count'=>'required|numeric|min:0|max:999999.99',
+    public static function newDetail($sort_id, $order_id, $count) {
+        $orderDetail = OrderDetail::create([
+            'sort_id'=>$sort_id,
+            'order_id'=>$order_id,
+            'count'=>$count
         ]);
 
-        $result = OrderDetail::create([
-            'sort_id'=>$validated['sort_id'],
-            'order_id'=>$validated['order_id'],
-            'count'=>$validated['count'],
-        ]);
+        return $orderDetail;
     }
 }
