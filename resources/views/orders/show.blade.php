@@ -43,20 +43,21 @@
                         @php
                             // Находим деталь, связанную с текущим сортом
                             $detail = $details->firstWhere('sort_id', $sort->id);
+
                         @endphp
                         <tr>
                             <td>{{ $sort->title }}</td>
                             <td>
-                                @if ($detail)
-                                    <input type="number" name="count[{{ $detail->id }}]" 
-                                        value="{{ $detail->count }}" 
-                                        min="1" 
-                                        class="form-control" />
-                                @else 
-                                    <input type="number" name="sort[{{ $sort->id }}]" 
+                                @if ($detail === null)
+                                <input type="number" name="sort[{{ $sort->id }}]" 
                                     value="{{ 0 }}" 
-                                    min="1" 
                                     class="form-control" />
+                                  
+                                @else 
+                                <input type="number" name="count[{{ $detail->id }}]" 
+                                value="{{ $detail->count }}" 
+                                min="1" 
+                                class="form-control" />
                                 @endif
                             </td>
                         </tr>

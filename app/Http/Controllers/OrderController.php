@@ -121,9 +121,12 @@ class OrderController extends Controller
         'sort.*' => 'required|integer|min:1',
     ]);
 
-    foreach ($request->sort as $sort_id => $count) {
-        $orderDetail = OrderDetailController::newDetail($sort_id, $order_id, $count);
-    } 
+    if ($request->sort) {
+        foreach ($request->sort as $sort_id => $count) {
+            $orderDetail = OrderDetailController::newDetail($sort_id, $order_id, $count);
+        } 
+    }
+    
 
     // Обновление количества для каждого элемента в деталях заказа
     foreach ($request->count as $orderDetailId => $count) {
