@@ -116,9 +116,9 @@ class OrderController extends Controller
     // Валидация входящих данных
     $request->validate([
         'count' => 'array',
-        'count.*' => 'required|integer|min:1', // количество должно быть целым числом и больше нуля
+        'count.*' => 'required|integer|min:0', // количество должно быть целым числом и больше нуля
         'sort' => 'array',
-        'sort.*' => 'required|integer|min:1',
+        'sort.*' => 'integer|min:0',
     ]);
 
     if ($request->sort) {

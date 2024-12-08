@@ -51,8 +51,8 @@
                                 @if ($detail === null)
                                 <input type="number" name="sort[{{ $sort->id }}]" 
                                     value="{{ 0 }}" 
+                                    min="0" 
                                     class="form-control" />
-                                  
                                 @else 
                                 <input type="number" name="count[{{ $detail->id }}]" 
                                 value="{{ $detail->count }}" 
