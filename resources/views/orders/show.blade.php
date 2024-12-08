@@ -56,7 +56,7 @@
                                 @else 
                                 <input type="number" name="count[{{ $detail->id }}]" 
                                 value="{{ $detail->count }}" 
-                                min="1" 
+                                min="0" 
                                 class="form-control" />
                                 @endif
                             </td>

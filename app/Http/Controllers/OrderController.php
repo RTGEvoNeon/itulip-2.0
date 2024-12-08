@@ -127,13 +127,15 @@ class OrderController extends Controller
         } 
     }
     
-
-    // Обновление количества для каждого элемента в деталях заказа
-    foreach ($request->count as $orderDetailId => $count) {
-        $orderDetail = OrderDetail::findOrFail($orderDetailId);
-        $orderDetail->count = $count;
-        $orderDetail->save();
+    if ($request->count) {
+        // Обновление количества для каждого элемента в деталях заказа
+        foreach ($request->count as $orderDetailId => $count) {
+            $orderDetail = OrderDetail::findOrFail($orderDetailId);
+            $orderDetail->count = $count;
+            $orderDetail->save();
+        }
     }
+
 
     // Перенаправляем обратно с сообщением об успешном обновлении
     return redirect()->route('orders.show', $order_id)->with('success', 'Детали заказа успешно обновлены!');
