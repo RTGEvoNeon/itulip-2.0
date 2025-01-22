@@ -44,6 +44,22 @@ services:
     ports:
       - '3306:3306'
 
+  netdata:
+    image: netdata/netdata
+    container_name: netdata
+    ports:
+      - "19999:19999"
+    restart: always
+    networks:
+      - my_network
+    volumes:
+      - /var/lib/netdata
+      - /etc/netdata
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+
 networks:
   my_network:
     driver: bridge
