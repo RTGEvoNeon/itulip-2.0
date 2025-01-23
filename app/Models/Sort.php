@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Sort extends Model
 {
@@ -19,9 +20,15 @@ class Sort extends Model
         'planted',
         'collected',
         'ordered',
+        'user_id',
     ];
 
     public function orderDetails() {
         return $this->hasMany(OrderDetail::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
