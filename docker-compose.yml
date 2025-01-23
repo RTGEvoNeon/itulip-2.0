@@ -60,10 +60,24 @@ services:
     environment:
       - DOCKER_HOST=unix:///var/run/docker.sock
 
+  portainer:
+    image: portainer/portainer-ce
+    container_name: portainer
+    ports:
+      - "9001:9000"  # Можно поменять на другой порт, если 9000 занят
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - my_network
+    restart: always
+
 networks:
   my_network:
     driver: bridge
 
 volumes:
   mysql_data:
+    driver: local
+  portainer_data:
     driver: local
