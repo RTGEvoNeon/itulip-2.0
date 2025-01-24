@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Sort;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -57,6 +58,7 @@ class OrderController extends Controller
                 'comment' => $validated['comment'] ?? null,
                 'messenger' => $validated['messenger'] ?? null,
                 'other_messenger' => $validated['other_messenger'] ?? null,
+                'user_id' => Auth::id(),
             ]);
         }
         
@@ -69,6 +71,7 @@ class OrderController extends Controller
             'total_count_box'=> $validated['total_count_box'] ?? 0,
             'box_price'=> $validated['box_price'] ?? 0,
             'client_id'=> $client->id,
+            'user_id' => Auth::id(),
         ]);
 
         return redirect()->route('clients.index')->with('success', 'Заказ добавлен успешно!');

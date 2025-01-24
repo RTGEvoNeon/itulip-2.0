@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderDetailController extends Controller
 {
@@ -11,7 +12,8 @@ class OrderDetailController extends Controller
         $orderDetail = OrderDetail::create([
             'sort_id'=>$sort_id,
             'order_id'=>$order_id,
-            'count'=>$count
+            'count'=>$count,
+            'user_id' => Auth::id(),
         ]);
 
         return $orderDetail;

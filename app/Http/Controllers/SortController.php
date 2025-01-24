@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Sort;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SortController extends Controller
 {
@@ -30,7 +31,7 @@ class SortController extends Controller
     public function store(Request $request)
     {
         $request->validate(['title' => 'required|string|max:255']);
-        Sort::create(['title' => $request->title]);
+        Sort::create(['title' => $request->title, 'user_id' => Auth::id()]);
         return redirect()->route('sorts.index')->with('success', 'Сорт успешно добавлен!');
     }
 
