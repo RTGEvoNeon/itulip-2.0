@@ -12,6 +12,12 @@
             <input type="text" name="title" id="title" class="form-control" required>
         </div>
 
+        <!-- Количество посажено -->
+        <div class="form-group">
+            <label for="planted" class="form-label">Посажено:</label>
+            <input type="number" name="planted" id="planted" class="form-control" required>
+        </div>
+
         <!-- Кнопка добавления -->
         <button type="submit" class="btn btn-primary btn-lg w-100">Добавить сорт</button>
     </form>

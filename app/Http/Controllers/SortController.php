@@ -30,8 +30,12 @@ class SortController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(['title' => 'required|string|max:255']);
-        Sort::create(['title' => $request->title, 'user_id' => Auth::id()]);
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'planted' => 'required|numeric|min:0', // Валидация для поля 'посажено'
+        ]);
+
+        Sort::create(['title' => $request->title, 'planted' => $request->planted, 'user_id' => Auth::id()]);
         return redirect()->route('sorts.index')->with('success', 'Сорт успешно добавлен!');
     }
 
@@ -64,6 +68,9 @@ class SortController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $sort = Sort::findOrFail($id);
+        $sort->delete();
+
+        return redirect()->route('sorts.index')->with('success', 'Сорт успешно удален!');
     }
 }
