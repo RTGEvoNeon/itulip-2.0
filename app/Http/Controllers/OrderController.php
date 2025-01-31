@@ -37,7 +37,7 @@ class OrderController extends Controller
             'total_count' => 'required|numeric|min:0|max:999999.99',
             'price' => 'required|numeric|min:0|max:999.99',
             'prepayment' => 'nullable|numeric|min:0|max:999999.99',
-            'date' => 'required|date',
+            'date' => 'nullable|date',
             'total_count_box' => 'nullable|integer|min:0',
             'box_price' => 'nullable|numeric|min:0|max:999.99',
 
@@ -66,7 +66,7 @@ class OrderController extends Controller
             'total_count' => $validated['total_count'],
             'price' => $validated['price'],
             'prepayment'=> $validated['prepayment'],
-            'date'=> $validated['date'],
+            'date'=> $validated['date'] ?? null,
             'comment' => $validated['comment'] ?? null,
             'total_count_box'=> $validated['total_count_box'] ?? 0,
             'box_price'=> $validated['box_price'] ?? 0,

@@ -17,7 +17,8 @@ class Order extends Model
     'date',
     'total_count_box',
     'box_price',
-    'client_id'
+    'client_id',
+    'user_id',
     ];
 
     protected static function booted()

@@ -18,6 +18,7 @@ class Client extends Model
         'comment',
         'messenger',
         'other_messenger',
+        'user_id',
     ];
 
     protected static function booted()

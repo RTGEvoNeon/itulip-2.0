@@ -15,6 +15,7 @@ class OrderDetail extends Model
         'order_id',
         'sort_id',
         'count',
+        'user_id',
     ];
 
     protected static function booted()

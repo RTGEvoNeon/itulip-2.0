@@ -59,17 +59,21 @@
                 <label for="prepayment" class="form-label">Предоплата:</label>
                 <input type="number" step="0.01" name="prepayment" id="prepayment" class="form-control">
             </div>
-
-            <!-- Дата -->
+            
+            <!-- Чекбокс для отображения полей даты и времени -->
             <div class="mb-3">
-                <label for="date" class="form-label">Дата:</label>
-                <input type="date" name="date" id="date" class="form-control" required>
+                <label for="toggleDateTime" class="form-label">Показать дату и время:</label>
+                <input type="checkbox" id="toggleDateTime" class="form-check-input" onclick="toggleDateTimeFields()">
             </div>
 
-            <!-- Время -->
-            <div class="mb-3">
-                <label for="time" class="form-label">Время:</label>
-                <input type="time" name="time" id="time" class="form-control" required>
+            <!-- Контейнер для полей даты и времени (скрыт по умолчанию) -->
+            <div id="dateTimeFields" style="display: none;" class="mb-3">
+                <label for="date" class="form-label">Дата:</label>
+                <input type="date" name="date" id="date" class="form-control">
+                <div class="mt-3">
+                    <label for="time" class="form-label">Время:</label>
+                    <input type="time" name="time" id="time" class="form-control">
+                </div>
             </div>
 
             <!-- Чекбокс для коробок -->
@@ -98,6 +102,12 @@
     </div>
 
     <script>
+
+            // Показать/скрыть поля даты и времени
+    function toggleDateTimeFields() {
+        const dateTimeFields = document.getElementById('dateTimeFields');
+        dateTimeFields.style.display = dateTimeFields.style.display === 'none' ? 'block' : 'none';
+    }
         // Показать/скрыть поле для второго телефона
         function toggleOtherPhone() {
             const otherPhone = document.getElementById('other_phone');
