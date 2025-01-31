@@ -19,25 +19,30 @@
                     <th>Заказано</th>
                     <th>Посажено</th>
                     <th>Срезано</th>
-                    <!-- Добавьте действия с сортами (например, редактирование или удаление) -->
                     <th>Действия</th>
                 </tr>
             </thead>
             <tbody>
+                <!-- Строка с суммой -->
+                <tr class="table-success">
+                    <td><strong>Итого:</strong></td>
+                    <td><strong>{{ $sorts->sum(fn($sort) => $sort->planted - $sort->collected) }}</strong></td>
+                    <td><strong>{{ $sorts->sum('ordered') }}</strong></td>
+                    <td><strong>{{ $sorts->sum('planted') }}</strong></td>
+                    <td><strong>{{ $sorts->sum('collected') }}</strong></td>
+                    <td></td> <!-- Пустая ячейка для колонки действий -->
+                </tr>
+
                 @foreach ($sorts as $sort)
                 <tr>
                     <td>{{ $sort->title }}</td>
                     <td class="{{ $sort->planted - $sort->collected < 100 ? 'bg-warning' : '' }}">
                         {{ $sort->planted - $sort->collected }}
-                    </td> <!-- Подсветка остатка -->
+                    </td>
                     <td>{{ $sort->ordered }}</td>
                     <td>{{ $sort->planted }}</td>
                     <td>{{ $sort->collected }}</td>
                     <td>
-                        <!-- Пример кнопки для редактирования -->
-                        {{-- <a href="{{ route('sorts.edit', $sort->id) }}" class="btn btn-warning btn-sm">Редактировать</a> --}}
-                        
-                        <!-- Пример кнопки для удаления -->
                         <form action="{{ route('sorts.destroy', $sort->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
@@ -50,7 +55,7 @@
         </table>
     </div>
 
-    <!-- Пагинация (раскомментируйте, если сортировка поддерживает пагинацию) -->
+    <!-- Пагинация -->
     {{-- <div class="d-flex justify-content-center mt-3">
         {{ $sorts->links() }}
     </div> --}}
