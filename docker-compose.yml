@@ -9,8 +9,9 @@ services:
     ports:
       - "9000:9000"
     environment:
-      XDEBUG_MODE: debug
+      XDEBUG_MODE: "${XDEBUG_ENABLED}"
       XDEBUG_CLIENT_HOST: host.docker.internal
+      XDEBUG_START_WITH_REQUEST: "yes"
     volumes:
       - .:/var/www/html
     depends_on:
