@@ -14,11 +14,30 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::with('client')->get();
+        $sort = $request->get('sort', 'id'); // По умолчанию сортируем по ID
+        $order = $request->get('order', 'asc'); // По умолчанию сортировка по возрастанию
+
+        $allowedSorts = ['id', 'client', 'total_count', 'date']; // Разрешенные столбцы
+        if (!in_array($sort, $allowedSorts)) {
+            $sort = 'id'; // Если передан неизвестный параметр, сортируем по ID
+        }
+
+        $orders = Order::query()
+            ->with('client') // Загружаем клиента вместе с заказами
+            ->when($sort === 'client', function ($query) use ($order) {
+                $query->whereHas('client', function ($q) use ($order) {
+                    $q->orderBy('name', $order);
+                });
+            }, function ($query) use ($sort, $order) {
+                $query->orderBy($sort, $order);
+            })
+            ->get(); // Заменили paginate() на get()
+
         return view('orders.index', compact('orders'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -107,7 +126,15 @@ class OrderController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $order = Order::findOrFail($id);
+
+        // Удаляем связанные детали заказа перед удалением заказа
+        $order->orderDetails()->delete();
+
+        // Удаляем сам заказ
+        $order->delete();
+
+        return redirect()->route('orders.index')->with('success', 'Заказ успешно удалён');
     }
 
 
