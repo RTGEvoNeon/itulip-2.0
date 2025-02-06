@@ -26,7 +26,7 @@
                 <!-- Строка с суммой -->
                 <tr class="table-success">
                     <td><strong>Итого:</strong></td>
-                    <td><strong>{{ $sorts->sum(fn($sort) => $sort->planted - $sort->collected) }}</strong></td>
+                    <td><strong>{{ $sorts->sum(fn($sort) => $sort->planted - $sort->ordered) }}</strong></td>
                     <td><strong>{{ $sorts->sum('ordered') }}</strong></td>
                     <td><strong>{{ $sorts->sum('planted') }}</strong></td>
                     <td><strong>{{ $sorts->sum('collected') }}</strong></td>
@@ -36,8 +36,8 @@
                 @foreach ($sorts as $sort)
                 <tr>
                     <td>{{ $sort->title }}</td>
-                    <td class="{{ $sort->planted - $sort->collected < 100 ? 'bg-warning' : '' }}">
-                        {{ $sort->planted - $sort->collected }}
+                    <td class="{{ $sort->planted - $sort->ordered < 100 ? 'bg-warning' : '' }}">
+                        {{ $sort->planted - $sort->ordered }}
                     </td>
                     <td>{{ $sort->ordered }}</td>
                     <td>{{ $sort->planted }}</td>

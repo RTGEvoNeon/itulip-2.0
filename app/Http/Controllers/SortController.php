@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrderDetail;
 use App\Models\Sort;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -72,5 +73,15 @@ class SortController extends Controller
         $sort->delete();
 
         return redirect()->route('sorts.index')->with('success', 'Сорт успешно удален!');
+    }
+
+    public static function recalculateOrdered($id) {
+        $totalOrdered = OrderDetail::where('sort_id', $id)->sum('count');
+        Sort::where('id', $id)->update(['ordered' => $totalOrdered]);
+        return response()->json([
+            'message' => 'Ordered count recalculated',
+            'sort_id' => $id,
+            'ordered' => $totalOrdered,
+        ]);
     }
 }

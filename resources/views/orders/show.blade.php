@@ -10,7 +10,7 @@
                     <li><strong>Общее количество:</strong> {{ $order->total_count }}</li>
                     <li><strong>Цена:</strong> {{ number_format($order->price, 2) }} руб.</li>
                     <li><strong>Предоплата:</strong> {{ number_format($order->prepayment, 2) }} руб.</li>
-                    <li><strong>Дата заказа:</strong> {{ \Carbon\Carbon::parse($order->date)->format('d.m.Y') }}</li>
+                    {{-- <li><strong>Дата заказа:</strong> {{ \Carbon\Carbon::parse($order->date)->format('d.m.Y') }}</li> --}}
                     <li><strong>Общее количество коробок:</strong> {{ $order->total_count_box }}</li>
                     <li><strong>Цена за коробку:</strong> {{ number_format($order->box_price, 2) }} руб.</li>
                 </ul>
@@ -26,11 +26,11 @@
             </div>
         </div>
 
-        <!-- Секция с таблицей -->
         <div class="table-container table-responsive">
             <form action="{{ route('orders.updateCount', $order->id) }}" method="POST">
                 @csrf
                 @method('PUT')
+        
                 <table class="table table-bordered table-hover">
                     <thead class="thead-light">
                         <tr>
@@ -43,30 +43,39 @@
                         @php
                             // Находим деталь, связанную с текущим сортом
                             $detail = $details->firstWhere('sort_id', $sort->id);
-
                         @endphp
                         <tr>
                             <td>{{ $sort->title }}</td>
                             <td>
                                 @if ($detail === null)
                                 <input type="number" name="sort[{{ $sort->id }}]" 
-                                    value="{{ 0 }}" 
+                                    value="0" 
                                     min="0" 
                                     class="form-control" />
                                 @else 
                                 <input type="number" name="count[{{ $detail->id }}]" 
-                                value="{{ $detail->count }}" 
-                                min="0" 
-                                class="form-control" />
+                                    value="{{ $detail->count }}" 
+                                    min="0" 
+                                    class="form-control" />
                                 @endif
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+        
+                <!-- Поле для редактирования даты -->
+                <div class="form-group mt-3">
+                    <label for="order_date"><strong>Дата заказа:</strong></label>
+                    <input type="date" id="order_date" name="date" 
+                           value="{{ \Carbon\Carbon::parse($order->date)->format('Y-m-d') }}" 
+                           class="form-control">
+                </div>
+        
                 <button type="submit" class="btn btn-primary mt-3">Сохранить изменения</button>
             </form>
         </div>
+        
     </div>
 </div>
 @endsection
