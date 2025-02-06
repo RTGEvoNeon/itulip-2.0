@@ -128,8 +128,16 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
 
+        // Получаем все `sort_id`, которые есть в деталях заказа
+        $sortIds = $order->orderDetails()->pluck('sort_id')->toArray();
+
         // Удаляем связанные детали заказа перед удалением заказа
         $order->orderDetails()->delete();
+
+        // Обновляем количество заказанных сортов
+        foreach ($sortIds as $sortId) {
+            SortController::recalculateOrdered($sortId);
+        }
 
         // Удаляем сам заказ
         $order->delete();
