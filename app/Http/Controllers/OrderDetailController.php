@@ -22,4 +22,12 @@ class OrderDetailController extends Controller
 
         return $orderDetail;
     }
+
+    public static function updateDetail($orderDetailId, $count) {
+        $orderDetail = OrderDetail::findOrFail($orderDetailId);
+        SortController::recalculateOrdered($orderDetail->sort_id);
+        $orderDetail->count = $count;
+        $orderDetail->save();
+        return $orderDetail;
+    }
 }

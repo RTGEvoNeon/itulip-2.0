@@ -171,9 +171,7 @@ class OrderController extends Controller
         if ($request->count) {
             // Обновление количества для каждого элемента в деталях заказа
             foreach ($request->count as $orderDetailId => $count) {
-                $orderDetail = OrderDetail::findOrFail($orderDetailId);
-                $orderDetail->count = $count;
-                $orderDetail->save();
+                OrderDetailController::updateDetail($orderDetailId, $count);
             }
         }
 
