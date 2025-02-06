@@ -3,29 +3,6 @@
 @section('content')
 <div class="card p-4">
     <div class="d-flex flex-wrap">
-        <!-- Секция с общей информацией -->
-        <div class="order-info px-3 mb-4">
-            <div class="order-summary mb-3">
-                <ul class="list-unstyled">
-                    <li><strong>Общее количество:</strong> {{ $order->total_count }}</li>
-                    <li><strong>Цена:</strong> {{ number_format($order->price, 2) }} руб.</li>
-                    <li><strong>Предоплата:</strong> {{ number_format($order->prepayment, 2) }} руб.</li>
-                    {{-- <li><strong>Дата заказа:</strong> {{ \Carbon\Carbon::parse($order->date)->format('d.m.Y') }}</li> --}}
-                    <li><strong>Общее количество коробок:</strong> {{ $order->total_count_box }}</li>
-                    <li><strong>Цена за коробку:</strong> {{ number_format($order->box_price, 2) }} руб.</li>
-                </ul>
-            </div>
-
-            <div class="client-info">
-                <ul class="list-unstyled">
-                    <li><strong>ФИО:</strong> {{ $order->client->name }}</li>
-                    <li><strong>Телефон:</strong> {{ $order->client->phone }}</li>
-                    <li><strong>Мессенджер:</strong> {{ $order->client->messenger }}</li>
-                    <li><strong>Комментарий:</strong> {{ $order->client->comment }}</li>
-                </ul>
-            </div>
-        </div>
-
         <div class="table-container table-responsive">
             <form action="{{ route('orders.updateCount', $order->id) }}" method="POST">
                 @csrf
@@ -75,7 +52,28 @@
                 <button type="submit" class="btn btn-primary mt-3">Сохранить изменения</button>
             </form>
         </div>
-        
+        <!-- Секция с общей информацией -->
+        <div class="order-info px-3 mb-4">
+            <div class="order-summary mb-3">
+                <ul class="list-unstyled">
+                    <li><strong>Общее количество:</strong> {{ $order->total_count }}</li>
+                    <li><strong>Цена:</strong> {{ number_format($order->price, 2) }} руб.</li>
+                    <li><strong>Предоплата:</strong> {{ number_format($order->prepayment, 2) }} руб.</li>
+                    {{-- <li><strong>Дата заказа:</strong> {{ \Carbon\Carbon::parse($order->date)->format('d.m.Y') }}</li> --}}
+                    <li><strong>Общее количество коробок:</strong> {{ $order->total_count_box }}</li>
+                    <li><strong>Цена за коробку:</strong> {{ number_format($order->box_price, 2) }} руб.</li>
+                </ul>
+            </div>
+
+            <div class="client-info">
+                <ul class="list-unstyled">
+                    <li><strong>ФИО:</strong> {{ $order->client->name }}</li>
+                    <li><strong>Телефон:</strong> {{ $order->client->phone }}</li>
+                    <li><strong>Мессенджер:</strong> {{ $order->client->messenger }}</li>
+                    <li><strong>Комментарий:</strong> {{ $order->client->comment }}</li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
