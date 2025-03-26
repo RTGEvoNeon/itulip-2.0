@@ -1,29 +1,32 @@
 #!/bin/bash
 
 # Настройка переменных
-PROJECT_DIR="."  # Путь к вашему проекту на сервере
-ENV_FILE=".env.production"     # Укажите, какой файл .env использовать для продакшн
-DOCKER_COMPOSE_FILE="docker-compose.yml"  # Путь к файлу docker-compose
-SERVER_USER="root"  # Имя пользователя на сервере
-SERVER_IP="itulip.ru"  # IP-адрес вашего сервера
+PROJECT_DIR="."  # Локальный путь к проекту
+ENV_FILE=".env.production"     # Файл продакшн-окружения
+DOCKER_COMPOSE_FILE="docker-compose.yml"  # docker-compose файл
+SERVER_USER="root"
+SERVER_IP="itulip.ru"
+REMOTE_DIR="/var/www/html"  # Папка на сервере
 
-# Перенос файлов на сервер
-echo "Переносим файлы на сервер..."
-rsync -avz --exclude=".git" --exclude="node_modules" --exclude=".env.local" $PROJECT_DIR $SERVER_USER@$SERVER_IP:/var/www/html
+echo "🚀 Начинаем деплой на $SERVER_IP"
 
-# Подключаемся к серверу для выполнения команд
-echo "Подключаемся к серверу..."
+# 🔁 Синхронизация файлов
+echo "📦 Копируем проект на сервер..."
+rsync -avz --exclude=".git" --exclude="node_modules" --exclude=".env.local" --exclude=".env" "$PROJECT_DIR/" "$SERVER_USER@$SERVER_IP:$REMOTE_DIR"
+
+# 🔧 Подключение и выполнение команд
+echo "🔧 Подключаемся к серверу и запускаем контейнеры..."
 ssh $SERVER_USER@$SERVER_IP << EOF
+  set -e  # Остановиться при ошибке
 
-  # Переходим в директорию проекта
-  cd /var/www/html
+  cd $REMOTE_DIR
 
-  # Копируем .env.production в .env (если еще не сделано)
+  echo "📄 Обновляем .env файл..."
   cp $ENV_FILE .env
-  
-  #установка зависимостей
-  #npm ci
-  #npm run production
 
+  echo "🐳 Перезапускаем docker-compose..."
+  docker compose down
+  docker compose up -d --build
 
-
+  echo "✅ Деплой завершен."
+EOF
