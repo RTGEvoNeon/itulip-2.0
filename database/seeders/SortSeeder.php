@@ -14,6 +14,6 @@ class SortSeeder extends Seeder
      */
     public function run(): void
     {
-        Sort::factory()->count(30)->create();
+        Sort::factory()->count(100)->create();
     }
 }

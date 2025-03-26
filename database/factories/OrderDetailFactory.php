@@ -18,12 +18,7 @@ class OrderDetailFactory extends Factory
      */
     public function definition(): array
     {
-
-        $sorts = Sort::pluck('id')->toArray();
-        $orders = Order::pluck('id')->toArray();
         return [
-            'order_id' => $this->faker->randomElement($orders),
-            'sort_id' => $this->faker->randomElement($sorts),
             'count' => $this->faker->numberBetween(1000, 50000),
         ];
     }
