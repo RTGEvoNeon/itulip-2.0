@@ -2,11 +2,11 @@
 
 echo "🔄 Очистка кэша Laravel..."
 
-php artisan view:clear
-php artisan route:clear
-php artisan config:clear
-php artisan cache:clear
-php artisan clear-compiled
-php artisan optimize:clear
+docker exec -it app php artisan view:clear
+docker exec -it app php artisan route:clear
+docker exec -it app php artisan config:clear
+docker exec -it app php artisan cache:clear
+docker exec -it app php artisan clear-compiled
+docker exec -it app php artisan optimize:clear
 
 echo "✅ Laravel кэш очищен."
